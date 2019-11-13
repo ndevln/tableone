@@ -244,7 +244,12 @@ function(vars,                                   # character vector of variable 
         smds <- FormatLstSmds(smds, nStrata = length(result))
     }
 
-
+    if (length(strata)==1) {
+        fun_call <- as.list(match.call())    
+        result_overall <- do.call(CreateContTable, args = fun_call[!names(fun_call) %in% c("", "strata")])
+        
+        result <- c(result_overall, result)
+    }
     ## Return object
     ## Give an S3 class
     class(result) <- c("ContTable", class(result))
