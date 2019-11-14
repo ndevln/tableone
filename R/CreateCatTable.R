@@ -87,7 +87,8 @@ function(vars,                                  # character vector of variable n
          argsApprox = list(correct = TRUE),     # arguments passed to testApprox
          testExact  = fisher.test,              # function for exact test
          argsExact  = list(workspace = 2*10^5), # arguments passed to testExact
-         smd        = TRUE                      # whether to include standardize mean differences
+         smd        = TRUE,                     # whether to include standardize mean differences
+         addOverall    = FALSE
          ) {
 
 ### Data check
@@ -195,14 +196,9 @@ function(vars,                                  # character vector of variable n
     }
 
 
-if (length(strata)==1) {
-
-    fun_call <- as.list(match.call())    
-    result_overall <- do.call(CreateCatTable, args = fun_call[!names(fun_call) %in% c("", "strata")])
-
-    result <- c(result_overall, result)
-}
-
+    if (!missing(addOverall) & addOverall) {
+        result <- c(ModuleCreateOverallColumn(match.call()), result)
+    }
 
     ## Return object
     ## Give an S3 class

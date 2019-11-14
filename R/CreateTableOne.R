@@ -111,7 +111,8 @@ function(vars,                                      # character vector of variab
          argsNormal    = list(var.equal = TRUE),    # arguments passed to testNormal
          testNonNormal = kruskal.test,              # test for nonnormally distributed variables
          argsNonNormal = list(NULL),                # arguments passed to testNonNormal
-         smd           = TRUE                       # whether to include standardize mean differences
+         smd           = TRUE,                      # whether to include standardize mean differences
+         addOverall    = FALSE
          ) {
 
 ### Data check
@@ -181,7 +182,8 @@ function(vars,                                      # character vector of variab
                                 argsNormal    = argsNormal,
                                 testNonNormal = testNonNormal,
                                 argsNonNormal = argsNonNormal,
-                                smd           = smd)
+                                smd           = smd,
+                                addOverall    = addOverall)
     argsCreateCatTable  <- list(data          = data,
                                 includeNA     = includeNA,
                                 test          = test,
@@ -189,7 +191,8 @@ function(vars,                                      # character vector of variab
                                 argsApprox    = argsApprox,
                                 testExact     = testExact,
                                 argsExact     = argsExact,
-                                smd           = smd)
+                                smd           = smd,
+                                addOverall    = addOverall)
 
     ## Add strata = strata for argument only if strata is given
     if (!missing(strata)) {

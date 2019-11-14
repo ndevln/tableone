@@ -90,7 +90,8 @@ function(vars,                                   # character vector of variable 
          argsNormal    = list(var.equal = TRUE), # arguments passed to testNormal
          testNonNormal = kruskal.test,           # test for nonnormally distributed variables
          argsNonNormal = list(NULL),             # arguments passed to testNonNormal
-         smd           = TRUE                    # whether to include standardize mean differences
+         smd           = TRUE,                   # whether to include standardize mean differences
+         addOverall    = FALSE
          ) {
 
 ### Data check
@@ -244,11 +245,8 @@ function(vars,                                   # character vector of variable 
         smds <- FormatLstSmds(smds, nStrata = length(result))
     }
 
-    if (length(strata)==1) {
-        fun_call <- as.list(match.call())    
-        result_overall <- do.call(CreateContTable, args = fun_call[!names(fun_call) %in% c("", "strata")])
-        
-        result <- c(result_overall, result)
+    if (!missing(addOverall) & addOverall) {
+        result <- c(ModuleCreateOverallColumn(match.call()), result)
     }
     ## Return object
     ## Give an S3 class
