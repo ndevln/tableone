@@ -218,12 +218,11 @@ ModuleCreateStrataVarAsFactor <- function(result, strata) {
 
 
 ModuleCreateOverallColumn <- function(call) {
-    ## Transform to List to remove strata
-    fun_call <- as.list(call)
-    ## Call CreateContTable or CreateCatTable Function without strata parameter
-    result_overall <- do.call(fun_call[[1]], args = fun_call[!names(fun_call) %in% c("", "strata", "addOverall")])
-    ## Return Overall XTable
-    return(result_overall)
+    ## Remove Strata und set addOverall to false
+    call$strata <- NULL
+    call$addOverall <- F
+    ## Recall function and return
+    return(eval(call))
 }
 
 
