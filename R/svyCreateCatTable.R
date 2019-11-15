@@ -27,7 +27,8 @@ function(vars,                      # character vector of variable names
          test       = TRUE,         # whether to include p-values
          testApprox = svyTestChisq, # function for approximation test (only choice)
          argsApprox = NULL,         # arguments passed to testApprox
-         smd        = TRUE          # whether to include standardize mean differences
+         smd        = TRUE,         # whether to include standardize mean differences
+         addOverall = FALSE
          ) {
 
 ### Data check
@@ -128,7 +129,15 @@ function(vars,                      # character vector of variable names
         ## Give name and add mean column
         smds <- FormatLstSmds(smds, nStrata = length(result))
     }
-
+    
+    if (isTRUE(addOverall) & is.list(strata)) {
+        ## Get Overall Table
+        result <- c(ModuleCreateOverallColumn(match.call()), result)
+        ## Fix attributes
+        attributes(result)$names <- c(attributes(result)$names[1], strataVarLevels)
+        attributes(result) <- c(attributes(result), list(strataVarName = strataVarName))
+    }
+    
     ## Return object
     ## Give an S3 class
     class(result) <- c("svyCatTable", "CatTable", class(result))

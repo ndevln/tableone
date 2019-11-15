@@ -85,7 +85,8 @@ function(vars,                                   # character vector of variable 
          argsNormal    = list(method = "Wald"),  # arguments passed to testNormal
          testNonNormal = svyTestNonNormal,       # test for nonnormally distributed variables
          argsNonNormal = NULL,                   # arguments passed to testNonNormal
-         smd           = TRUE                    # whether to include standardize mean differences
+         smd           = TRUE,                   # whether to include standardize mean differences
+         addOverall    = FALSE
          ) {
 
 ### Data check
@@ -155,13 +156,15 @@ function(vars,                                   # character vector of variable 
                                 argsNormal    = argsNormal,
                                 testNonNormal = testNonNormal,
                                 argsNonNormal = argsNonNormal,
-                                smd           = smd)
+                                smd           = smd,
+                                addOverall    = addOverall)
     argsCreateCatTable  <- list(data          = data,
                                 includeNA     = includeNA,
                                 test          = test,
                                 testApprox    = testApprox,
                                 argsApprox    = argsApprox,
-                                smd           = smd)
+                                smd           = smd,
+                                addOverall    = addOverall)
 
     ## Add strata = strata for argument only if strata is given
     if (!missing(strata)) {

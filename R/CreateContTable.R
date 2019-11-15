@@ -245,8 +245,12 @@ function(vars,                                   # character vector of variable 
         smds <- FormatLstSmds(smds, nStrata = length(result))
     }
 
-    if (!missing(addOverall) & addOverall) {
+    if (isTRUE(addOverall) & is.list(strata)) {
+        ## Get Overall Table
         result <- c(ModuleCreateOverallColumn(match.call()), result)
+        ## Fix attributes
+        attributes(result)$names <- c(attributes(result)$names[1], levels(strataVar))
+        attributes(result) <- c(attributes(result), list(strataVarName = strataVarName))
     }
     ## Return object
     ## Give an S3 class

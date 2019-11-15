@@ -29,7 +29,8 @@ function(vars,                                  # character vector of variable n
          argsNormal    = list(method = "Wald"), # arguments passed to testNormal
          testNonNormal = svyTestNonNormal,      # test for nonnormally distributed variables
          argsNonNormal = NULL,                  # arguments passed to testNonNormal
-         smd           = TRUE                   # whether to include standardize mean differences
+         smd           = TRUE,                  # whether to include standardize mean differences
+         addOverall    = FALSE
          ) {
 
 ### Data check
@@ -147,7 +148,14 @@ function(vars,                                  # character vector of variable n
         ## Give name and add mean column
         smds <- FormatLstSmds(smds, nStrata = length(result))
     }
-
+    
+    if (isTRUE(addOverall) & is.list(strata)) {
+        ## Get Overall Table
+        result <- c(ModuleCreateOverallColumn(match.call()), result)
+        ## Fix attributes
+        attributes(result)$names <- c(attributes(result)$names[1], strataVarLevels)
+        attributes(result) <- c(attributes(result), list(strataVarName = strataVarName))
+    }
 
     ## Return object
     ## Give an S3 class
