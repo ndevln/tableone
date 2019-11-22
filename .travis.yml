@@ -9,7 +9,7 @@ r:
   - devel
 cache: packages
 # helpful when preparing your package for submission to CRAN
-warnings_are_errors: false
+warnings_are_errors: true
 # No need for sudo as R is natively supported now.
 sudo: false
 

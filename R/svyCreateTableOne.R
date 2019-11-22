@@ -11,6 +11,7 @@
 ##' @param argsNonNormal A named list of arguments passed to the function specified in \code{testNonNormal}.
 ##' @param testApprox A function used to perform the large sample approximation based tests. The default is \code{svychisq}.
 ##' @param argsApprox A named list of arguments passed to the function specified in testApprox.
+##' @param addOverall (optional, only used if strata are supplied) Adds an overall column to the table. Smd and p-value calculations are performed using only the stratifed clolumns.
 ##'
 ##' @details See the details for \code{\link{CreateTableOne}}.
 ##'
